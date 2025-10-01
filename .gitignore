@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# User data (sensitive information)
+users/
+!users/.gitignore
+
+# Logs
+*.log
+
+# LeetCode submissions (if you don't want to include them in this repo)
+# Uncomment the next line if you want to keep submissions separate
+# leetcodeProblems/
+
+# Git directory (in case someone clones into a git repo)
+.git/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
