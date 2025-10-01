@@ -34,19 +34,21 @@ USAGE:
     lcsync <command>
 
 COMMANDS:
-    init        Initialize project folders and .gitignore
-    user        Set up user configuration (username, repo, commit message)
+    init        Initialize lcsync tool (dependencies, users folder, logs)
+    user        Set up target repository and create LeetCode directory structure
     cookie      Update/change LeetCode session cookie  
     fetch       Fetch new accepted submissions from LeetCode
     push        Push changes to GitHub (git add, commit, push)
+    push -m"msg" Push with custom commit message
     help        Show this help message
 
 EXAMPLES:
-    lcsync init         # Initialize the project
-    lcsync user         # Set up your user configuration
-    lcsync cookie       # Add your LeetCode session cookie
-    lcsync fetch        # Fetch your latest submissions
-    lcsync push         # Push to GitHub
+    lcsync init                              # Initialize the project
+    lcsync user                              # Set up your user configuration
+    lcsync cookie                            # Add your LeetCode session cookie
+    lcsync fetch                             # Fetch your latest submissions
+    lcsync push                              # Push with default message
+    lcsync push -m"Added new solutions"      # Push with custom message
 
 FULL WORKFLOW:
     1. lcsync init      # First time setup
@@ -81,6 +83,17 @@ def main():
     if command in command_map:
         if command in ['help', '-h', '--help']:
             show_help()
+        elif command == 'push':
+            # Handle custom commit message for push command
+            args = ['git-push']
+            if len(sys.argv) > 2 and sys.argv[2].startswith('-m'):
+                if sys.argv[2] == '-m' and len(sys.argv) > 3:
+                    # Format: lcsync push -m "message"
+                    args.extend(['-m', sys.argv[3]])
+                elif sys.argv[2].startswith('-m'):
+                    # Format: lcsync push -m"message" 
+                    args.extend([sys.argv[2]])
+            run_command(args)
         else:
             run_command(command_map[command])
     else:

@@ -13,7 +13,7 @@ import click
 from .set_user import get_user_config
 
 
-def git_push():
+def git_push(custom_message=None):
     """Bundle git add, commit, push operations"""
     logger = logging.getLogger()
     
@@ -22,7 +22,12 @@ def git_push():
         username, config = get_user_config()
         
         repo_path = Path(config["GITHUB_REPO_DIR"])
-        commit_message = config["GITHUB_COMMIT_MESSAGE"]
+        
+        # Use custom message if provided, otherwise use default from config
+        if custom_message:
+            commit_message = custom_message
+        else:
+            commit_message = config["GITHUB_COMMIT_MESSAGE"]
         
         click.echo(f"🚀 Git operations for user: {username}")
         click.echo(f"📁 Repository: {repo_path}")

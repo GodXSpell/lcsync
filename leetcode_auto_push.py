@@ -73,10 +73,11 @@ def fetch():
     fetch_submissions()
 
 @cli.command()
-def git_push():
+@click.option('-m', '--message', help='Custom commit message')
+def git_push(message):
     """Bundle git add, commit, push operations"""
     from commands.git_push import git_push as git_push_func
-    git_push_func()
+    git_push_func(message)
 
 if __name__ == "__main__":
     cli()

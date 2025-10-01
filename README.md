@@ -42,6 +42,8 @@ A professional CLI tool to automatically fetch and organize your LeetCode submis
 
    **Manual Setup (All Platforms):**
    ```bash
+   # Dependencies will be automatically checked and installed during 'lcsync init'
+   # Or install manually if needed:
    pip install -r requirements.txt
    ```
 
@@ -66,20 +68,25 @@ A professional CLI tool to automatically fetch and organize your LeetCode submis
 
 ## Quick Start
 
-### 1. Initialize the Project
+### 1. Initialize the Tool
 ```bash
 lcsync init
 ```
-This creates the necessary folder structure and configuration files.
+This will:
+- Check for required Python dependencies (click, requests)
+- Offer to automatically install missing packages
+- Set up the lcsync tool (users folder, logs, configuration files)
 
-### 2. Set Up User Configuration
+### 2. Set Up Target Repository
 ```bash
 lcsync user
 ```
 You'll be prompted for:
 - Username
-- Local GitHub repository path
+- Local GitHub repository path (where your solutions will be stored)
 - Commit message (default: "Update LeetCode submissions")
+
+This command will create the `leetcodeProblems/` directory structure in your chosen repository.
 
 ### 3. Set Your LeetCode Session Cookie
 ```bash
@@ -127,25 +134,31 @@ python leetcode_auto_push.py git-push
 ## Project Structure
 
 ```
-leetcode_auto_submit/
+lcsync/                         # Tool directory
 │
 ├── leetcode_auto_push.py       # Main CLI entry point
+├── lcsync.py                  # Short command wrapper
 ├── commands/                   # Command implementations
 │   ├── __init__.py
-│   ├── init.py                # Initialize project
-│   ├── set_user.py            # User configuration
+│   ├── init.py                # Initialize tool
+│   ├── set_user.py            # User configuration & target repo setup
 │   ├── set_cookie.py          # Cookie management
 │   ├── fetch.py               # LeetCode API integration
 │   └── git_push.py            # Git operations
 ├── users/                     # User data (ignored by Git)
 │   └── .gitignore             # Protects sensitive data
-├── leetcodeProblems/          # Your submissions
-│   ├── easy/                  # Easy difficulty problems
-│   ├── medium/                # Medium difficulty problems
-│   └── hard/                  # Hard difficulty problems
 ├── requirements.txt           # Python dependencies
 ├── leetcode_auto_push.log     # Operation logs
 └── README.md                  # This file
+
+your-leetcode-repo/             # Your target repository (separate location)
+│
+├── leetcodeProblems/          # Your submissions (created by 'lcsync user')
+│   ├── easy/                  # Easy difficulty problems
+│   ├── medium/                # Medium difficulty problems
+│   └── hard/                  # Hard difficulty problems
+├── README.md                  # Your repository documentation
+└── .git/                      # Your Git repository
 ```
 
 ## Commands Reference
@@ -153,8 +166,8 @@ leetcode_auto_submit/
 ### Short Commands (Recommended)
 | Command | Description |
 |---------|-------------|
-| `lcsync init` | Initialize project folders and .gitignore |
-| `lcsync user` | One-time user setup (username, repo path, commit message) |
+| `lcsync init` | Initialize lcsync tool (dependencies, users folder, logs) |
+| `lcsync user` | Set up target repository and create LeetCode directory structure |
 | `lcsync cookie` | Update/change LeetCode session cookie |
 | `lcsync fetch` | Fetch new accepted submissions from LeetCode |
 | `lcsync push` | Bundle git add, commit, and push operations |
@@ -164,8 +177,8 @@ leetcode_auto_submit/
 ### Full Commands (Alternative)
 | Command | Description |
 |---------|-------------|
-| `python leetcode_auto_push.py init` | Initialize project folders and .gitignore |
-| `python leetcode_auto_push.py set-user` | One-time user setup (username, repo path, commit message) |
+| `python leetcode_auto_push.py init` | Initialize lcsync tool (dependencies, users folder, logs) |
+| `python leetcode_auto_push.py set-user` | Set up target repository and create LeetCode directory structure |
 | `python leetcode_auto_push.py set-cookie` | Update/change LeetCode session cookie |
 | `python leetcode_auto_push.py fetch` | Fetch new accepted submissions from LeetCode |
 | `python leetcode_auto_push.py git-push` | Bundle git add, commit, and push operations |
@@ -174,10 +187,10 @@ leetcode_auto_submit/
 
 ### Easy 5-Step Process:
 ```bash
-# Step 1: Initialize project
+# Step 1: Initialize the lcsync tool
 lcsync init
 
-# Step 2: Set up user configuration  
+# Step 2: Set up your target repository
 lcsync user
    
 # Step 3: Add LeetCode session cookie
@@ -322,19 +335,24 @@ All operations are logged to `leetcode_auto_push.log` with timestamps:
 
 ### Common Issues
 
-1. **"Session cookie may have expired"**
-   - Run `python leetcode_auto_push.py set_cookie` to update your cookie
+1. **"Missing dependencies" during init**
+   - The `lcsync init` command will automatically detect and offer to install missing packages
+   - If automatic installation fails, run manually: `pip install click requests`
+   - Ensure you have Python 3.7+ and pip installed
+
+2. **"Session cookie may have expired"**
+   - Run `lcsync cookie` to update your cookie
    - Make sure you're logged into LeetCode in your browser
 
-2. **"Git push failed: permission denied"**
+3. **"Git push failed: permission denied"**
    - Check your Git authentication (SSH key or personal access token)
    - Verify your GitHub repository URL with `git remote -v`
 
-3. **"Repository path does not exist"**
+4. **"Repository path does not exist"**
    - Ensure the GitHub repository path you provided exists
    - Make sure it's a valid Git repository (contains .git folder)
 
-4. **"No accepted submissions found"**
+5. **"No accepted submissions found"**
    - Make sure you have solved problems on LeetCode
    - Check that your session cookie is valid
    - Verify you're logged into the correct LeetCode account

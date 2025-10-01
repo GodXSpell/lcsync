@@ -57,6 +57,23 @@ def set_user():
             type=str
         ).strip()
         
+        # Create LeetCode directory structure in the target repository
+        click.echo(f"\n📁 Creating LeetCode directory structure in {repo_path}...")
+        leetcode_directories = [
+            repo_path / "leetcodeProblems" / "easy",
+            repo_path / "leetcodeProblems" / "medium", 
+            repo_path / "leetcodeProblems" / "hard"
+        ]
+        
+        for directory in leetcode_directories:
+            directory.mkdir(parents=True, exist_ok=True)
+            logger.info(f"Created directory: {directory}")
+        
+        click.echo("✅ Created LeetCode directory structure:")
+        for directory in leetcode_directories:
+            relative_path = directory.relative_to(repo_path)
+            click.echo(f"  📁 {relative_path}")
+        
         # Create user configuration
         user_config = {
             "LEETCODE_COOKIE": "",  # Will be set later with set_cookie command
@@ -76,8 +93,9 @@ def set_user():
         click.echo()
         click.echo("✅ User configuration saved successfully!")
         click.echo(f"📁 User file: {user_file.relative_to(project_root)}")
+        click.echo(f"📁 LeetCode solutions will be saved to: {repo_path / 'leetcodeProblems'}")
         click.echo()
-        click.echo("🔑 Next step: Run 'python leetcode_auto_push.py set_cookie' to add your LeetCode session cookie")
+        click.echo("🔑 Next step: Run 'lcsync cookie' to add your LeetCode session cookie")
         
     except Exception as e:
         error_msg = f"Failed to set user configuration: {str(e)}"

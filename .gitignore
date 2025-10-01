@@ -36,16 +36,3 @@ users/
 
 # Logs
 *.log
-
-# LeetCode submissions (if you don't want to include them in this repo)
-# Uncomment the next line if you want to keep submissions separate
-# leetcodeProblems/
-
-# Git directory (in case someone clones into a git repo)
-.git/
-
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
