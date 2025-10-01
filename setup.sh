@@ -3,8 +3,8 @@
 
 echo "🚀 Setting up LeetCode Sync (lcsync) for Unix/Linux/Mac..."
 
-# Make the main script executable
-chmod +x lcsync
+# Make the shell script executable
+chmod +x lcsync.sh
 echo "✅ Made lcsync executable"
 
 # Check if Python 3 is available

@@ -49,15 +49,21 @@ A professional CLI tool to automatically fetch and organize your LeetCode submis
 
 3. **Verify installation:**
    ```bash
-   # Windows
+   # Windows CMD
    lcsync help
    
-   # Mac/Linux  
-   ./lcsync help
+   # Windows PowerShell (if execution policy blocks scripts)
+   .\lcsync.cmd help
    
    # Universal (works in any directory after cd to project)
    python lcsync.py help
    ```
+
+4. **If commands don't work:**
+   - **PowerShell**: Try `.\lcsync.cmd help` (always works)
+   - **CMD**: Try `lcsync help` (should work with PATH)
+   - **Universal**: `python lcsync.py help` (works everywhere)
+   - **For global access**: Restart your terminal after adding to PATH
 
 4. **Ensure Git is installed and configured:**
    ```bash
@@ -220,9 +226,9 @@ lcsync push -m "Week 3 progress - tree problems completed"
 
 | Platform | Method | Example | Notes |
 |----------|--------|---------|-------|
-| **Windows CMD** | Batch file | `lcsync help` | Easiest, works out of the box |
-| **Windows PowerShell** | PS1 script | `.\lcsync.ps1 help` | Good for PowerShell users |
-| **Mac/Linux** | Shell script | `./lcsync help` | Need `chmod +x lcsync` first |
+| **Windows CMD** | CMD file | `lcsync help` | Works out of the box |
+| **Windows PowerShell** | CMD file | `lcsync help` | Works after adding to PATH |
+| **Mac/Linux** | Shell script | `./lcsync.sh help` | Need `chmod +x lcsync.sh` first |
 | **Universal** | Direct Python | `python lcsync.py help` | Works on all platforms |
 
 ### Detailed Examples
@@ -235,20 +241,21 @@ lcsync init
 lcsync user
 lcsync fetch
 
-# PowerShell
+# PowerShell (if execution policy blocks scripts)
 cd your_project_path\leetcode_auto_submit
-.\lcsync.ps1 init
-.\lcsync.ps1 user  
-.\lcsync.ps1 fetch
+lcsync init              # Usually works
+.\lcsync.cmd init        # If above fails
+python lcsync.py init    # Always works
 ```
 
 **Mac/Linux:**
 ```bash
-# Terminal (after chmod +x lcsync)
+# Terminal (after chmod +x lcsync.sh)
 cd your_project_path/leetcode_auto_submit
-./lcsync init
-./lcsync user
-./lcsync fetch
+chmod +x lcsync.sh
+./lcsync.sh init
+./lcsync.sh user
+./lcsync.sh fetch
 ```
 
 **Universal (any platform):**
@@ -340,7 +347,14 @@ All operations are logged to `leetcode_auto_push.log` with timestamps:
    - If automatic installation fails, run manually: `pip install click requests`
    - Ensure you have Python 3.7+ and pip installed
 
-2. **"Session cookie may have expired"**
+2. **PowerShell "execution policy" errors**
+   - Error: `"running scripts is disabled on this system"`
+   - Solution 1: Use `lcsync` (works in PowerShell without policy issues)
+   - Solution 2: Use `.\lcsync.cmd` explicitly  
+   - Solution 3: Use `python lcsync.py` (always works)
+   - Solution 4: Enable scripts: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+
+3. **"Session cookie may have expired"**
    - Run `lcsync cookie` to update your cookie
    - Make sure you're logged into LeetCode in your browser
 
