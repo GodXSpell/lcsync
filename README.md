@@ -16,20 +16,26 @@ A professional CLI tool to automatically fetch and organize your LeetCode submis
 
 1. **Clone or download this project:**
    ```bash
-   git clone <your-repo-url>
-   cd leetcode_auto_submit
+   git clone https://github.com/GodXSpell/lcsync.git
+   cd lcsync
    ```
+   
+   *Note: Replace the URL with your actual repository URL and navigate to your cloned directory*
 
 2. **Platform-specific setup:**
 
    **Windows (Recommended):**
    ```powershell
    # Run PowerShell as Administrator (optional for global install)
+   # Navigate to your cloned directory first
+   cd path\to\your\cloned\lcsync
    powershell -ExecutionPolicy Bypass -File setup.ps1
    ```
 
    **Mac/Linux:**
    ```bash
+   # Navigate to your cloned directory first
+   cd /path/to/your/cloned/lcsync
    chmod +x setup.sh
    ./setup.sh
    ```
@@ -47,7 +53,7 @@ A professional CLI tool to automatically fetch and organize your LeetCode submis
    # Mac/Linux  
    ./lcsync help
    
-   # Universal
+   # Universal (works in any directory after cd to project)
    python lcsync.py help
    ```
 
@@ -99,7 +105,11 @@ This will:
 
 ### 5. Push to GitHub (Optional)
 ```bash
+# Push with automatic commit message
 lcsync push
+
+# Push with custom commit message  
+lcsync push -m "Added dynamic programming solutions"
 ```
 This runs: `git add .`, `git commit`, and `git push` in sequence.
 
@@ -148,6 +158,7 @@ leetcode_auto_submit/
 | `lcsync cookie` | Update/change LeetCode session cookie |
 | `lcsync fetch` | Fetch new accepted submissions from LeetCode |
 | `lcsync push` | Bundle git add, commit, and push operations |
+| `lcsync push -m "message"` | Push with custom commit message |
 | `lcsync help` | Show help and available commands |
 
 ### Full Commands (Alternative)
@@ -184,6 +195,10 @@ lcsync push
 # Get new submissions and push to GitHub
 lcsync fetch
 lcsync push
+
+# Or with custom commit message
+lcsync fetch  
+lcsync push -m "Week 3 progress - tree problems completed"
 ```
 
 ## Cross-Platform Usage
@@ -201,13 +216,36 @@ lcsync push
 
 **Windows:**
 ```cmd
-# Command Prompt (CMD)
-cd d:\leetcode_auto_submit
+# Command Prompt (CMD) 
+cd your_project_path\leetcode_auto_submit
 lcsync init
 lcsync user
 lcsync fetch
 
 # PowerShell
+cd your_project_path\leetcode_auto_submit
+.\lcsync.ps1 init
+.\lcsync.ps1 user  
+.\lcsync.ps1 fetch
+```
+
+**Mac/Linux:**
+```bash
+# Terminal (after chmod +x lcsync)
+cd your_project_path/leetcode_auto_submit
+./lcsync init
+./lcsync user
+./lcsync fetch
+```
+
+**Universal (any platform):**
+```bash
+# Works everywhere Python is installed
+cd your_project_path/leetcode_auto_submit
+python lcsync.py init
+python lcsync.py user
+python lcsync.py fetch
+```
 cd d:\leetcode_auto_submit  
 .\lcsync.ps1 init
 .\lcsync.ps1 user
